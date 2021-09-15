@@ -7,7 +7,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 
 import TabTwoScreen from '../screens/TabTwoScreen';
-import TabOneScreen from "../screens/TabOneScreen";
+import HomeScreen from "../screens/HomeScreen";
 import { BottomTabParamList, HomeParamList, TabTwoParamList } from '../types';
 
 /**
@@ -25,7 +25,8 @@ export default function BottomTabNavigator() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
         tabBarLabelStyle: {fontSize: 12, padding: 5},
-        headerShown: false
+        headerShown: false,
+        tabBarStyle: {padding: 10}
       }}>
       <BottomTab.Screen
         name="Home"
@@ -53,7 +54,7 @@ export default function BottomTabNavigator() {
         name="Downloads"
         component={TabTwoScreen}
         options={{
-          tabBarIcon: ({ color }) => <AntDesign name="home" size={24} color={color} />,
+          tabBarIcon: ({ color }) => <AntDesign name="download" size={24} color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -67,7 +68,7 @@ function TabOneNavigator() {
     <HomeStack.Navigator>
       <HomeStack.Screen
         name='HomeScreen'
-        component={TabOneScreen}
+        component={HomeScreen}
         options={{headerShown: false}}
       />
     </HomeStack.Navigator>
