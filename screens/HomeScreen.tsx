@@ -1,15 +1,23 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, FlatList } from "react-native";
 import { View } from '../components/Themed';
-import categories from "../assets/data/categories";
 import HomeCategory from "../components/HomeCategory";
-
+import { DataStore } from "aws-amplify";
+import { Category } from "../src/models";
 
 export default function HomeScreen() {
+  const [categories, setCategories] = useState<Category[]>([])
+
+  useEffect(() => {
+    const fetchCategories = (async() => {
+      setCategories(await DataStore.query(Category))
+    })()
+  }, [])
+
   return (
     <View style={styles.container}>
       <FlatList
-        data={categories.items}
+        data={categories}
         renderItem = {({item}) => (
           <HomeCategory category = {item} />
         )}

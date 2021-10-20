@@ -11,7 +11,7 @@ var isLandscape = false
 var flag = false
 
 const VideoPlayer = (props: VideoPlayerProps) => {
-  const { episode } = props
+  const { episode, play } = props
   const video = useRef<Playback>(null)
   const [status, setStatus] = useState({})
   const isFirstRender = useRef(true)
@@ -30,6 +30,15 @@ const VideoPlayer = (props: VideoPlayerProps) => {
       else isFirstRender.current = false
     })()
   }, [episode])
+
+  useEffect(() => {
+    const playVideo = (async() => {
+      if(play > 0){
+        await video?.current?.playAsync()
+        await video?.current?.presentFullscreenPlayer()
+      }
+    })()
+  }, [play])
 
   const changeToLandscape = async() => {
     if(flag){
