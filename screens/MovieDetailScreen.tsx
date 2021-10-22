@@ -81,7 +81,7 @@ const MovieDetailScreen = () => {
               </Pressable>
 
               {/* Download Button */}
-              <Pressable onPress={() => console.warn('Play')} style={styles.downloadButton}>
+              <Pressable onPress={() => console.warn('Download')} style={styles.downloadButton}>
                 <AntDesign name="download" size={24} color="white" style={{marginRight: 10}} />
                 <Text style = {styles.downloadButtonText}>Download</Text>
               </Pressable>

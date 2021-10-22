@@ -1,8 +1,9 @@
-import React from "react";
-import { Image, StyleSheet, Pressable } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Image, StyleSheet, Pressable, ActivityIndicator } from "react-native";
 import { View, Text } from "../components/Themed";
 import { AntDesign } from '@expo/vector-icons';
 import { Episode } from "../types";
+import { Storage } from "aws-amplify";
 
 interface EpisodeItemProps {
   episode: Episode
@@ -11,10 +12,17 @@ interface EpisodeItemProps {
 
 const EpisodeItem = (props: EpisodeItemProps) => {
   const { onPress, episode } = props
+  const [posterURL, setPosterURL] = useState('')
+
+  useEffect(() => {
+    Storage.get(episode.poster).then(setPosterURL)
+  },[])
+
   return (
     <Pressable style={{paddingHorizontal: 12, paddingBottom: 30}} onPress={() => {onPress(episode)}}>
       <View style={styles.row}>
-        <Image source={{uri: episode.poster}} style = {styles.image}/>
+        {posterURL === '' ? <ActivityIndicator style={styles.image} size='small' color='#fff' /> :
+        <Image source={{uri: posterURL}} style = {styles.image}/>}
 
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{episode.title}</Text>

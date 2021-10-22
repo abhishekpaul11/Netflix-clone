@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, FlatList, Pressable } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, FlatList } from 'react-native';
+import MovieItem from "./MovieItem";
 
 import { Text } from '../components/Themed';
 import { Category, Movie } from "../src/models";
@@ -13,7 +13,6 @@ interface HomeCategoryProps {
 const HomeCategory = (props: HomeCategoryProps) => {
   const { category } = props
   const [movies, setMovies] = useState<Movie[]>([])
-  const navigation = useNavigation()
 
   useEffect(() => {
     const fetchMovies = (async() => {
@@ -21,20 +20,12 @@ const HomeCategory = (props: HomeCategoryProps) => {
     })()
   },[])
 
-  const moviePress = (movie: Movie) => {
-    navigation.navigate('MovieDetailScreen', {id: movie.id})
-  }
-
   return (
     <>
       <Text style={styles.title}> {category.title} </Text>
       <FlatList
         data={movies}
-        renderItem={({ item }) => (
-          <Pressable onPress = {() => moviePress(item)}>
-            <Image style={styles.image} source={{uri: item.poster}} />
-          </Pressable>
-        )}
+        renderItem={({ item }) => <MovieItem movie={item} />}
         horizontal
         showsHorizontalScrollIndicator = {false}
       />
@@ -45,13 +36,6 @@ const HomeCategory = (props: HomeCategoryProps) => {
 export default HomeCategory
 
 const styles = StyleSheet.create({
-  image: {
-    width: 120,
-    height: 170,
-    resizeMode: 'cover',
-    borderRadius: 5,
-    margin: 3.5
-  },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
